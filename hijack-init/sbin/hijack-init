@@ -40,7 +40,7 @@ upstart_test_subshell() {
   kill 1
 }
 
-if [ $(variant) == "upstart" ]; then
+if [ "$(variant)" == "upstart" ]; then
   upstart_test_subshell &
 
   exec /sbin/init
