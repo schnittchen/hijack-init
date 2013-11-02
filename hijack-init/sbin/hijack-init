@@ -12,7 +12,7 @@ variant() {
 }
 
 run_test() {
-  if sh -c $script; then
+  if sh -c "$script"; then
     echo 'hijack-init: tests exited without error'
     true
   else
