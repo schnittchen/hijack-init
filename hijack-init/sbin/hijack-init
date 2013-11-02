@@ -26,7 +26,7 @@ upstart_test_subshell() {
 
   sleep 2 # give services time to spawn
 
-  if run_test;
+  if run_test; then
     result="true"
   else
     result="false"
