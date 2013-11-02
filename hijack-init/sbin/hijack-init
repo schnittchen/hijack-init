@@ -1,6 +1,6 @@
 #!/bin/sh
 
-script="$1"
+test="$1"
 
 variant() {
   if /sbin/init --help 2>&1 | grep upstart >/dev/null
@@ -12,7 +12,7 @@ variant() {
 }
 
 run_test() {
-  if sh -c "$script"; then
+  if sh -c "$test"; then
     echo 'hijack-init: tests exited without error'
     true
   else
