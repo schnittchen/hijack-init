@@ -1,6 +1,7 @@
 #!/bin/sh
 
 test="$1"
+wait_services_seconds=2
 
 variant() {
   if /sbin/init --help 2>&1 | grep upstart >/dev/null
@@ -26,7 +27,7 @@ upstart_test_subshell() {
 
   init 2 # enter runlevel 2
 
-  sleep 2 # give services time to spawn
+  sleep $wait_services_seconds # give services time to spawn
 
   if run_test; then
     result="true"
@@ -49,7 +50,7 @@ if [ "$(variant)" = "upstart" ]; then
 else # sysv init
   /sbin/init --init &
 
-  sleep 2 # give services time to spawn
+  sleep $wait_services_seconds # give services time to spawn
 
   run_test
 fi
