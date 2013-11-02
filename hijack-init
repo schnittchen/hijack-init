@@ -35,9 +35,16 @@ upstart_test_subshell() {
     result="false"
   fi
 
-  # replace /sbin/init with /bin/true or /bin/false
-  rm /sbin/init
-  cp /bin/$result /sbin/init
+  # replace /sbin/init with our own version, saving the original
+  mv /sbin/init /sbin/original-init
+  cat <<INIT >> /sbin/init
+#!/bin/bash
+rm /sbin/init
+mv /sbin/original-init /sbin/init
+/bin/$result
+INIT
+  chmod a+x /sbin/init
+
 
   # tell upstart to exec to /sbin/init
   kill 1
