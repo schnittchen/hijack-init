@@ -1,5 +1,0 @@
-#!/bin/sh
-
-sleep 1 && init 2 && sleep 2 && /sbin/hijack-run-tests "$@" &
-
-exec /sbin/init

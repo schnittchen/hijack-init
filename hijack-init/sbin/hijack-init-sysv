@@ -1,7 +1,0 @@
-#!/bin/sh
-
-/sbin/init --init &
-
-sleep 2
-
-sh -c "$1"
