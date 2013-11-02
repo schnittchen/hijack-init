@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if /sbin/init --help 2>&1 | grep upstart
+then
+  echo upstart
+else
+  echo sysv
+fi

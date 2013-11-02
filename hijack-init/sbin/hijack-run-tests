@@ -1,0 +1,17 @@
+#!/bin/sh
+
+sleep 1
+
+init 2
+
+sleep 2
+
+if sh -c $1
+  rm /sbin/init
+  cp /bin/true /sbin/init
+else
+  rm /sbin/init
+  cp /bin/false /sbin/init
+fi
+
+kill 1
