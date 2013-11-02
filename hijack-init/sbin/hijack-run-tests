@@ -8,9 +8,11 @@ sleep 2
 
 if sh -c $1
 then
+  echo 'hijack-init: tests exited without error'
   rm /sbin/init
   cp /bin/true /sbin/init
 else
+  echo 'hijack-init: tests exited with nonzero exit status'
   rm /sbin/init
   cp /bin/false /sbin/init
 fi
