@@ -1,3 +1,53 @@
 #!/bin/sh
 
-exec hijack-init-`/sbin/hijack-init-variant` "$@"
+variant() {
+  if /sbin/init --help 2>&1 | grep upstart >/dev/null
+  then
+    echo upstart
+  else
+    echo sysv
+  fi
+}
+
+run_test() {
+  if sh -c "$1"; then
+    echo 'hijack-init: tests exited without error'
+    true
+  else
+    echo 'hijack-init: tests exited with nonzero exit status'
+    false
+  fi
+}
+
+upstart_test_subshell() {
+  sleep 1 # give upstart time to start up
+
+  init 2 # enter runlevel 2
+
+  sleep 2 # give services time to spawn
+
+  if run_test;
+    result="true"
+  else
+    result="false"
+  fi
+
+  # replace /sbin/init with /bin/true or /bin/false
+  rm /sbin/init
+  cp /bin/$result /sbin/init
+
+  # tell upstart to exec to /sbin/init
+  kill 1
+}
+
+if [ $(variant) == "upstart" ]; then
+  upstart_test_subshell &
+
+  exec /sbin/init
+else # sysv init
+  /sbin/init --init &
+
+  sleep 2 # give services time to spawn
+
+  run_test
+fi
