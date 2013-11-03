@@ -1,7 +1,7 @@
 #!/bin/sh
 
 test="$1"
-wait_services_seconds=2
+wait_services_seconds=5
 
 variant() {
   if /sbin/init --help 2>&1 | grep upstart >/dev/null
